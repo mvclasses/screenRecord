@@ -9,9 +9,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <style>
-        video {
-            -webkit-transform: scaleX(-1);
-            transform: scaleX(-1);
+        .onlyVideo {
+            /* -webkit-transform: scaleX(-1);
+            transform: scaleX(-1); */
+        }
+        .onlyScreen {
+            /* -webkit-transform: scaleX(-1);
+            transform: scaleX(-1); */
         }
     </style>
 </head>
@@ -24,14 +28,16 @@
     <button type="button" onclick="recordVideo()" class="btn btn-info">Record Video</button>
     <button type="button" onclick="recordScreen()" class="btn btn-info">Record Screen</button>
     <div class="p-5">
-        <video autoplay height='480' width="640" muted></video>
+        <video class="onlyVideo" autoplay height='480' width="640" muted></video>
+        <!-- <video class="onlyScreen" autoplay height='480' width="640" muted></video> -->
     </div>
     </div>
 </body>
 <script>
     let shouldStop = false;
     let stopped = false;
-    const videoElement = document.getElementsByTagName("video")[0];
+    const videoElement = document.getElementsByClassName("onlyVideo")[0];
+    // const videoElement1 = document.getElementsByClassName("onlyScreen")[0];    
     const downloadLink = document.getElementById('download');
     const stopButton = document.getElementById('stop');
     function startRecord() {
@@ -79,6 +85,8 @@
             downloadLink.download = `${filename || 'recording'}.webm`;
             stopRecord();
             videoElement.srcObject = null;
+            // videoElement1.srcObject = null;
+            
         };
 
         mediaRecorder.start(200);
@@ -92,6 +100,8 @@
     }
 
     async function recordVideo() {
+        
+        $(".onlyVideo").css({"-webkit-transform":"scaleX(-1)","transform":"scaleX(-1)"});
         const mimeType = 'video/webm';
         shouldStop = false;
         const constraints = {
